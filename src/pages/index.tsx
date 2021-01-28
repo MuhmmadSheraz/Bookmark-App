@@ -45,12 +45,15 @@ const IndexPage = () => {
   const [desc, setDesc] = React.useState("");
   const [linkName, setLinkName] = React.useState("");
   if (loading) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="h-screen flex justify-center items-center  text-purple-100">
+        <p className="text-4xl text-Finn">Bookmarks Loading...</p>
+      </div>
+    );
   }
   if (error) {
     return <h1>Error...?</h1>;
   }
-  console.log("Data===>", data);
   return (
     <div className="min-h-screen bg-Finn text-blue">
       {/* Heading */}
@@ -62,7 +65,7 @@ const IndexPage = () => {
             value={linkName}
             className="sm:p-5 w-full p-2"
             placeholder="What do You Want to Call it?"
-            onChange={(e)=>setLinkName(e.target.value)}
+            onChange={(e) => setLinkName(e.target.value)}
           />
           <br />
           <br />
@@ -70,7 +73,7 @@ const IndexPage = () => {
             value={link}
             className="sm:p-5 w-full p-2"
             placeholder="Enter Your Website Link"
-            onChange={(e)=>setLink(e.target.value)}
+            onChange={(e) => setLink(e.target.value)}
           />
           <br />
           <br />
@@ -80,7 +83,7 @@ const IndexPage = () => {
             cols="40"
             className=" sm:p-5 w-full p-2"
             placeholder="Enter Your Website Link"
-            onChange={(e)=>setDesc(e.target.value)}
+            onChange={(e) => setDesc(e.target.value)}
           />
           <button
             className="px-9 py-3  mt-2 text-white bg-yellow-600 rounded-3xl"
