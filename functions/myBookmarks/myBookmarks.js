@@ -9,7 +9,7 @@ dotenv.config();
 
 // Global Client For All Mutation
 const client = new faunadb.Client({
-  secret: process.env.FaunaDB_Key,
+  secret: "fnAEAodTAbACDRgZo5150tk59tOlfJDh8rMytjYz",
 });
 
 // Defining Types
@@ -20,15 +20,18 @@ const typeDefs = gql`
 
   type Mutation {
     addBookmark(
+      Name: String
       URL: String
       Description: String
       DateCreated: String
       Id: String
     ): bookmarkLink
+
     deleteBookmark(Id: String): bookmarkLink
   }
 
   type bookmarkLink {
+    Name: String!
     URL: String
     DateCreated: String
     Description: String
@@ -46,8 +49,10 @@ const resolvers = {
             q.Lambda((x) => q.Get(x))
           )
         );
+        console.log("result====>", result.data);
         return result.data.map((x) => {
           return {
+            Name: x.data.Name,
             URL: x.data.URL,
             Description: x.data.Description,
             Date: x.data.Date,
@@ -58,7 +63,7 @@ const resolvers = {
     },
   },
   Mutation: {
-    addBookmark: async (_, { URL, Description, DateCreated }) => {
+    addBookmark: async (_, { URL, Description, DateCreated, Name }) => {
       try {
         const result = await client.query(
           q.Create(q.Collection("Bookmarks"), {
@@ -66,6 +71,7 @@ const resolvers = {
               URL: URL,
               DateCreated: DateCreated,
               Description: Description,
+              Name: Name,
             },
           })
         );
